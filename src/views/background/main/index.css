@@ -1,0 +1,10 @@
+.layoutMain{
+  height: 100vh;
+}
+
+.header{
+  background-color: #08a2ba;
+}
+.slider,.header{
+  color: #fff;
+}

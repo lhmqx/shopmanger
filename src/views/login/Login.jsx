@@ -1,6 +1,6 @@
 import React from "react";
 import "./login.css";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { checkLogin } from "../../http/adminApi";
 
@@ -12,7 +12,7 @@ export default function Login(props) {
     <div className="loginMain">
       <div className="login">
         <Form name="normal_login" className="login-form" initialValues={{ remember: true }} onFinish={confirmLogin}>
-          <Form.Item name="username" rules={[{ required: true, message: "请输入用户名!" }]}>
+          <Form.Item name="userid" rules={[{ required: true, message: "请输入用户名!" }]}>
             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
           </Form.Item>
           <Form.Item name="password" rules={[{ required: true, message: "请输入密码!" }]}>
@@ -23,7 +23,7 @@ export default function Login(props) {
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
-            <a className="login-form-forgot" href="www.baidu.com">
+            <a className="login-form-forgot" href="http://www.baidu.com">
               Forgot password
             </a>
           </Form.Item>
@@ -41,17 +41,18 @@ export default function Login(props) {
 
 // 确认登录
 async function confirmLogin(options){
-  let { username, password} = options;
+  let { userid, password} = options;
   try {
-    let loginMes = await checkLogin({username,password});
-    if(loginMes.username==="zhangsan"&&loginMes.password==="123456"){
+    let loginMes = await checkLogin({userid,password});
+    // console.log(loginMes);
+    if(loginMes.code === 1){
+      localStorage.setItem("userid",loginMes.data.userid);
+      localStorage.setItem("username",loginMes.data.username);
+      localStorage.setItem("token",loginMes.token);
       pro.history.replace("/home");
     }else{
-      return;
+      return message.error(loginMes.tips);
     }
-    // if(loginMes.status === 200){
-    //   pro.history.repolace("/home");
-    // }
   } catch (error) {
     console.log(error);
   }
