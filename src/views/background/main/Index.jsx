@@ -14,7 +14,7 @@ export default function Index(props) {
       <Sider className="slider">Sider</Sider>
       <Layout>
         <Header className="header">
-          <Button>fsddfasdfasdfasfdadsas</Button>
+          <Button></Button>
         </Header>
         <Content>Content</Content>
         <Footer>Footer</Footer>
